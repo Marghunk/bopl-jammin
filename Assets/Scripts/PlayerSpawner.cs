@@ -5,8 +5,7 @@ using UnityEngine;
 public class PlayerSpawner : MonoBehaviour
 {
     public GameObject playerPrefab;
-    public List<Material> playerMaterials = new List<Material>(); 
-
+    public List<Material> playerMaterials = new List<Material>();
     HashSet<int> SpawnedPlayersGamepadIndicies()
     {
         HashSet<int> spawnedPlayersGamepadIndicies = new HashSet<int>();

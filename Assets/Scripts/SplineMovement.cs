@@ -61,6 +61,10 @@ public class SplineMovement : MonoBehaviour
     [Tooltip("[1.0 -> -1.0] Used for ignoring input direction in jump impulse if input is facing surface. At 0.0 then perpindicular angles are considered down, at -1.0 then only the vector exactly down is considered down. Between 0.0 and -1.0 will progressively get more 'down', whereas 0.0 to 1.0 is progressively more 'up'.")]
     public float isDownwardsTolerance = -0.6f;
 
+
+    [Header("Coen's shit")]
+    public GameObject triangle;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -87,6 +91,8 @@ public class SplineMovement : MonoBehaviour
         Vector2 inputDirection = new Vector2(hz, vt);
         float inputMagnitude = inputDirection.magnitude;
         inputDirection.Normalize();
+
+        
 
         #region Jumping
         if (Input.GetButton($"Jump-GP-{gamepadIndex}") 

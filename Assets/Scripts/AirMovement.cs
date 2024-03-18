@@ -11,6 +11,8 @@ public class AirMovement : MonoBehaviour
 
     public float speed = 100.0f;
 
+    public float gravityScale = 1f;
+
     public bool debug;
     public Color debugInputColor;
 
@@ -25,7 +27,7 @@ public class AirMovement : MonoBehaviour
     void Update()
     {
         int gamepadIndex = inputs.GamepadIndex();
-        rb.gravityScale = 1.0f;
+        rb.gravityScale = gravityScale;
 
         float hz = Input.GetAxisRaw($"Horizontal-GP-{gamepadIndex}") + Input.GetAxisRaw($"Horizontal");
         if (hz == 0.0f) return; // No input.
