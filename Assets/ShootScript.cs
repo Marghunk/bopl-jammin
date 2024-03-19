@@ -42,7 +42,7 @@ public class ShootScript : MonoBehaviour
         {
             Debug.Log("Fire!");
             // Draw the input direction.
-            if (toggleDebug) Debug.DrawRay(transform.position, inputDirection * inputMagnitude, debugInputColor);
+            //if (toggleDebug) Debug.DrawRay(transform.position, inputDirection * inputMagnitude, debugInputColor);
             triangle.transform.position = transform.position + ((Vector3)inputDirection * 0.5f);
 
         }

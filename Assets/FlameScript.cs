@@ -26,6 +26,7 @@ public class FlameScript : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
+            GameObject.FindFirstObjectByType<CanvasScript>().TallyScore((int)collision.transform.GetComponent<Inputs>().zoop);
             Destroy(collision.gameObject);
         }
     }

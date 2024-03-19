@@ -28,14 +28,20 @@ public class Waterball : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
+        if (collision.gameObject.tag == "Player")
+        {
+            Vector3 v = (collision.transform.position - transform.position).normalized;
+            collision.transform.GetComponent<Rigidbody2D>().velocity = v * 10;
+        }
         if (!stopIt)
         {
             transform.GetChild(0).gameObject.SetActive(true);
             GameObject g = Instantiate(Resources.Load("Waterpack") as GameObject, transform.position, Quaternion.identity);
             if (evo == 2)
             {
-                StartCoroutine(ShitFire(2));
-                g.GetComponent<FlameScript>().lifetime *= 3;
+                gameObject.layer = 8;
+                StartCoroutine(ShitWater(2));
+                //g.GetComponent<FlameScript>().lifetime *= 3;
             }
             else
             {
@@ -48,26 +54,15 @@ public class Waterball : MonoBehaviour
 
     }
 
-    IEnumerator ShitFire(float f)
+    IEnumerator ShitWater(float f)
     {
-        int health = 4;
+        int health = 5;
         float v = f;
         Vector2 pos = transform.position;
-        while (v > 0)
+        for (int i = 0; i < health; i++)
         {
-            if (Vector3.Distance(transform.position, pos) > 1)
-            {
-                GameObject g = Instantiate(Resources.Load("Flame") as GameObject, transform.position, Quaternion.identity);
-                g.GetComponent<FlameScript>().lifetime *= 3;
-                health--;
-                if (health <= 0)
-                {
-                    Destroy(gameObject);
-                }
-                pos = transform.position;
-            }
-            v -= Time.deltaTime;
-            yield return null;
+            GameObject g = Instantiate(Resources.Load("Waterpack2") as GameObject, transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(0.3f);
         }
         Destroy(gameObject);
         yield return null;

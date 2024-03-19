@@ -6,6 +6,7 @@ public class PlayerSpawner : MonoBehaviour
 {
     public GameObject playerPrefab;
     public List<Material> playerMaterials = new List<Material>();
+
     HashSet<int> SpawnedPlayersGamepadIndicies()
     {
         HashSet<int> spawnedPlayersGamepadIndicies = new HashSet<int>();
@@ -27,7 +28,7 @@ public class PlayerSpawner : MonoBehaviour
     {
         if (Input.GetButtonDown("Spawn-GP-0") || Input.GetButtonDown("Spawn-KB"))
         {
-            if (!SpawnedPlayersGamepadIndicies().Contains(0)) SpawnPlayer(0);
+            if (!SpawnedPlayersGamepadIndicies().Contains(0)) SpawnPlayer(0); 
         }
         else if (Input.GetButtonDown("Spawn-GP-1"))
         {
@@ -62,5 +63,8 @@ public class PlayerSpawner : MonoBehaviour
         Debug.Assert(gamepadIndex < playerMaterials.Count);
         SpriteRenderer spriteRenderer = player.GetComponent<SpriteRenderer>();
         spriteRenderer.material = playerMaterials[gamepadIndex];
+
+        // Give canvas context to the new character
+        GameObject.Find("GameCanvas").GetComponent<CanvasScript>().CreateCharAvatar(gamepadIndex, player);
     }
 }

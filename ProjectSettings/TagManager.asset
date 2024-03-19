@@ -11,6 +11,9 @@ TagManager:
   - PlayerSpawn
   - DeathZone
   - Spawner
+  - Water
+  - Electric
+  - Fire
   layers:
   - Default
   - TransparentFX
@@ -20,8 +23,8 @@ TagManager:
   - UI
   - Terrain
   - Slime
-  - 
-  - 
+  - Water
+  - nuthin
   - 
   - 
   - 

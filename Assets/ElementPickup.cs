@@ -30,9 +30,10 @@ public class ElementPickup : MonoBehaviour
             default:
                 break;
         }
-
-
-        GetComponent<SpriteRenderer>().color = c;
+        Color d = c;
+        d.a = 0.33f;
+        transform.GetChild(0).GetComponent<Renderer>().material.color = d;
+        //transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.color = c;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

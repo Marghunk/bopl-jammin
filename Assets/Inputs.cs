@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Inputs : MonoBehaviour
 {
-    int? gamepadIndex = null;
+    public int? gamepadIndex = null;
+    public int zoop;
 
     public void SetGamepadIndex(int gamepadIndex)
     {
         this.gamepadIndex = gamepadIndex;
+        zoop = gamepadIndex;
     }
 
     public bool HasKeyboard()

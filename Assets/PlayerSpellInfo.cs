@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerSpellInfo : MonoBehaviour
@@ -9,6 +10,14 @@ public class PlayerSpellInfo : MonoBehaviour
     public List<Element> heldElements = new List<Element>() { Element.FireElement() };
 
     public GameObject a, b, c;
+
+    [SerializeField]
+    CanvasScript canvasS;
+
+    private void Start()
+    {
+        canvasS = GameObject.FindFirstObjectByType<CanvasScript>();
+    }
 
     private void Update()
     {
@@ -48,6 +57,7 @@ public class PlayerSpellInfo : MonoBehaviour
                 case Element.elementEnum.Null:
                     break;
                 case Element.elementEnum.Electric:
+                    Thunderbolt(dir);
                     break;
                 case Element.elementEnum.Fire:
                     Fireball(dir);
@@ -66,9 +76,19 @@ public class PlayerSpellInfo : MonoBehaviour
         {
             switch (heldElements[0].elementName)
             {
-                case Element.elementEnum.Null:
-                    break;
                 case Element.elementEnum.Electric:
+                    switch (heldElements[1].elementName)
+                    {
+                        case Element.elementEnum.Electric:
+                            Thunderbolt(dir, 2);
+                            break;
+                        case Element.elementEnum.Fire:
+                            break;
+                        case Element.elementEnum.Nature:
+                            break;
+                        case Element.elementEnum.Water:
+                            break;
+                    }
                     break;
                 case Element.elementEnum.Fire:
                     switch (heldElements[1].elementName)
@@ -85,8 +105,31 @@ public class PlayerSpellInfo : MonoBehaviour
                     }
                     break;
                 case Element.elementEnum.Nature:
+                    switch (heldElements[1].elementName)
+                    {
+                        case Element.elementEnum.Electric:
+                            break;
+                        case Element.elementEnum.Fire:
+                            break;
+                        case Element.elementEnum.Nature:
+                            break;
+                        case Element.elementEnum.Water:                            
+                            break;
+                    }
                     break;
                 case Element.elementEnum.Water:
+                    switch (heldElements[1].elementName)
+                    {
+                        case Element.elementEnum.Electric:
+                            break;
+                        case Element.elementEnum.Fire:
+                            break;
+                        case Element.elementEnum.Nature:
+                            break;
+                        case Element.elementEnum.Water:
+                            Waterball(dir, 2);
+                            break;
+                    }
                     break;
                 default:
                     break;
@@ -96,11 +139,21 @@ public class PlayerSpellInfo : MonoBehaviour
         }
     }
 
-    private void Waterball(Vector2 dir)
+    private void Thunderbolt(Vector2 dir, int level = 1)
+    {
+        Vector2 up = -GetComponent<ShootScript>().gravity.DirectionToNearestGround();
+        GameObject g = Instantiate(Resources.Load("Thunderball") as GameObject, (transform.position + (Vector3)up * 0.3f) + ((Vector3)dir * 0.7f), Quaternion.identity);
+        g.GetComponent<Thunderball>().evo = level;
+        g.GetComponent<Rigidbody2D>().velocity = dir * 7.5f;
+    }
+
+    private void Waterball(Vector2 dir, int level = 1)
     {
         Vector2 up = -GetComponent<ShootScript>().gravity.DirectionToNearestGround();
         GameObject g = Instantiate(Resources.Load("Waterball") as GameObject, (transform.position + (Vector3)up * 0.3f) + ((Vector3)dir * 0.7f), Quaternion.identity);
+        g.GetComponent<Waterball>().evo = level;
         g.GetComponent<Rigidbody2D>().velocity = dir * 7.5f;
+
     }
 
     private void Fireball(Vector2 dir, int level = 1)
@@ -109,6 +162,18 @@ public class PlayerSpellInfo : MonoBehaviour
         GameObject g = Instantiate(Resources.Load("Fireball") as GameObject, (transform.position+(Vector3)up * 0.3f) + ((Vector3)dir * 0.7f), Quaternion.identity);
         g.GetComponent<FireballScript>().evo = level;
         g.GetComponent<Rigidbody2D>().velocity = dir * 7.5f;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Electric")
+        {
+            Debug.Log(collision.name);
+            //Debug.Log();
+            canvasS.TallyScore(transform.GetComponent<Inputs>().zoop);
+            Debug.Log("ZAP!");
+            Destroy(gameObject);
+        }
     }
 }
 
@@ -150,4 +215,5 @@ public class Element
     {
         return new Element(elementEnum.Electric, new Color(1, 0.9712542f, 0.5113207f, 1));
     }
+
 }

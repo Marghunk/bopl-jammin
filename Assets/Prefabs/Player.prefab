@@ -670,7 +670,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  movementSpeed: 300
+  movementSpeed: 600
   jumpBaseImpulseMagnitude: 400
   spaceHeldDownTime: 0
   spaceHeldJumpImpulseMaximum: 1
@@ -794,8 +794,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heldElements:
-  - elementName: 4
-    elementalColor: {r: 0, g: 0.93763614, b: 1, a: 1}
+  - elementName: 1
+    elementalColor: {r: 0.97155476, g: 1, b: 0, a: 1}
+  - elementName: 1
+    elementalColor: {r: 0.97155476, g: 1, b: 0, a: 1}
   a: {fileID: 6702732524630584558}
   b: {fileID: 5648163977476501087}
   c: {fileID: 880149222191617050}
@@ -810,7 +812,7 @@ GameObject:
   - component: {fileID: 718376284542555347}
   - component: {fileID: 2422999414514388223}
   - component: {fileID: 2712545528985222521}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
