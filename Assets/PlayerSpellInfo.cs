@@ -54,7 +54,7 @@ public class PlayerSpellInfo : MonoBehaviour
         {
             switch (heldElements[0].elementName)
             {
-                case Element.elementEnum.Null:
+                case Element.elementEnum.Chaos:
                     break;
                 case Element.elementEnum.Electric:
                     Thunderbolt(dir);
@@ -182,8 +182,8 @@ public class PlayerSpellInfo : MonoBehaviour
 [System.Serializable]
 public class Element
 {
-    public enum elementEnum { Null, Electric, Fire, Nature, Water }
-    public elementEnum elementName = elementEnum.Null;
+    public enum elementEnum { Chaos, Electric, Fire, Nature, Water }
+    public elementEnum elementName = elementEnum.Fire;
 
     public Sprite GetIcon()
     {

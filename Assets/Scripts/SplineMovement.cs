@@ -109,7 +109,7 @@ public class SplineMovement : MonoBehaviour
         if (debug) Debug.DrawRay(transform.position, up, debugJumpDirectionColor);
 
         // Jump.
-        if (Input.GetButtonUp($"Jump-GP-{gamepadIndex}") || Input.GetButtonUp($"Jump-KB"))
+        if (Input.GetButtonDown($"Jump-GP-{gamepadIndex}") || Input.GetButtonUp($"Jump-KB"))
         {
             Debug.Assert(ratioOfInputDirectionJumpImpulseForce >= 0.0f);
             Debug.Assert(ratioOfInputDirectionJumpImpulseForce <= 1.0f);
@@ -130,7 +130,7 @@ public class SplineMovement : MonoBehaviour
                 if (dotInputWithUp < isDownwardsTolerance) ratioOfInputDirectionFinal = 0.0f;
             }
             
-            Vector2 upSurfaceDirectionForce = up * jumpBaseImpulseMagnitude * (1.0f + Mathf.Clamp(spaceHeldDownTime, 0.0f, spaceHeldJumpImpulseMaximum)) * (1.0f - ratioOfInputDirectionFinal);
+            Vector2 upSurfaceDirectionForce = up * jumpBaseImpulseMagnitude * (1.0f + (spaceHeldJumpImpulseMaximum / 2) /*Mathf.Clamp(spaceHeldDownTime, 0.0f, spaceHeldJumpImpulseMaximum)*/) * (1.0f - ratioOfInputDirectionFinal);
             Vector2 inputDirectionForce = inputDirection * jumpBaseImpulseMagnitude * ratioOfInputDirectionFinal;
 
             Vector2 jumpForce = upSurfaceDirectionForce + inputDirectionForce;

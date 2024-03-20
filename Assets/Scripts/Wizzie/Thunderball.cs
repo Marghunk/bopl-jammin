@@ -34,8 +34,14 @@ public class Thunderball : MonoBehaviour
 
         if (evo == 2)
         {
+            
             SetColliderPointsFromTrail(tr, edge);
         }
+        else
+        {
+            transform.GetChild(0).GetComponent<TrailRenderer>().time = 0.1f;
+        }
+        
 
     }
 

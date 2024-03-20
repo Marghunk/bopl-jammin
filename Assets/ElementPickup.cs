@@ -13,7 +13,7 @@ public class ElementPickup : MonoBehaviour
     {
         switch (element)
         {
-            case Element.elementEnum.Null:
+            case Element.elementEnum.Chaos:
                 break;
             case Element.elementEnum.Electric:
                 c = Color.yellow;
