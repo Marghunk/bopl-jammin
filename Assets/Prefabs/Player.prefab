@@ -644,9 +644,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 1
   debugForwardColor: {r: 1, g: 0, b: 0, a: 1}
-  debugBackwardColor: {r: 0, g: 0, b: 1, a: 1}
+  debugBackwardColor: {r: 1, g: 0.56100696, b: 0, a: 1}
   debugInputColor: {r: 0, g: 1, b: 0, a: 1}
-  debugJumpDirectionColor: {r: 1, g: 0, b: 0.87482166, a: 1}
+  debugJumpDirectionColor: {r: 1, g: 0.89107513, b: 0, a: 1}
   movementAccelerationCurve:
     serializedVersion: 2
     m_Curve:

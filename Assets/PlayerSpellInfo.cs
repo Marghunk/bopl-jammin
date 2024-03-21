@@ -14,6 +14,28 @@ public class PlayerSpellInfo : MonoBehaviour
     [SerializeField]
     CanvasScript canvasS;
 
+    [SerializeField ]
+    bool chaos = false;
+
+    public bool SetChaos
+    {
+        get { return chaos; }
+        set { chaos = value;
+            StartCoroutine(ChaosTime(3f));
+        }
+    }
+
+    IEnumerator ChaosTime(float f)
+    {
+        while (f > 0)
+        {
+            f -= Time.deltaTime;
+            yield return null;
+        }
+        chaos = false;
+        yield return null;
+    }
+
     private void Start()
     {
         canvasS = GameObject.FindFirstObjectByType<CanvasScript>();
@@ -182,7 +204,7 @@ public class PlayerSpellInfo : MonoBehaviour
 [System.Serializable]
 public class Element
 {
-    public enum elementEnum { Chaos, Electric, Fire, Nature, Water }
+    public enum elementEnum { Chaos, Electric, Fire, Water, Nature }
     public elementEnum elementName = elementEnum.Fire;
 
     public Sprite GetIcon()

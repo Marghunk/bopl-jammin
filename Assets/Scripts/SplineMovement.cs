@@ -130,7 +130,7 @@ public class SplineMovement : MonoBehaviour
                 if (dotInputWithUp < isDownwardsTolerance) ratioOfInputDirectionFinal = 0.0f;
             }
             
-            Vector2 upSurfaceDirectionForce = up * jumpBaseImpulseMagnitude * (1.0f + (spaceHeldJumpImpulseMaximum / 2) /*Mathf.Clamp(spaceHeldDownTime, 0.0f, spaceHeldJumpImpulseMaximum)*/) * (1.0f - ratioOfInputDirectionFinal);
+            Vector2 upSurfaceDirectionForce = up * jumpBaseImpulseMagnitude * (1.0f + (spaceHeldJumpImpulseMaximum * 0.66f) /*Mathf.Clamp(spaceHeldDownTime, 0.0f, spaceHeldJumpImpulseMaximum)*/) * (1.0f - ratioOfInputDirectionFinal);
             Vector2 inputDirectionForce = inputDirection * jumpBaseImpulseMagnitude * ratioOfInputDirectionFinal;
 
             Vector2 jumpForce = upSurfaceDirectionForce + inputDirectionForce;
