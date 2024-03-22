@@ -15,9 +15,11 @@ public class Thunderball : MonoBehaviour
     public TrailRenderer tr;
     public EdgeCollider2D edge;
 
+    GameObject g;
+
     private void Start()
     {
-        GameObject g = Instantiate(Resources.Load("Thundertrail") as GameObject, Vector3.zero, Quaternion.identity);
+        g = Instantiate(Resources.Load("Thundertrail") as GameObject, Vector3.zero, Quaternion.identity);
         edge = g.GetComponent<EdgeCollider2D>();
         transform.GetChild(0).gameObject.SetActive(true);
     }
@@ -53,18 +55,19 @@ public class Thunderball : MonoBehaviour
             points.Add(tr.GetPosition(i));
         }
         edge.SetPoints(points);
+        
     }
 
     List<Collider2D> collected = new List<Collider2D>(); // WARNING !!!! RECURSIVE !!!!
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.tag == "Player")
-        {
-            GameObject.FindFirstObjectByType<CanvasScript>().TallyScore((int)collision.transform.GetComponent<Inputs>().zoop);
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
-        }
+        //if (collision.transform.tag == "Player")
+        //{
+        //    GameObject.FindFirstObjectByType<CanvasScript>().TallyScore((int)collision.transform.GetComponent<Inputs>().zoop);
+        //    Destroy(collision.gameObject);
+        //    Destroy(gameObject);
+        //}
 
         if (!stopIt)
         {
@@ -73,8 +76,8 @@ public class Thunderball : MonoBehaviour
             if (evo == 2)
             {
                 ThunderStrike();
+                edge.enabled = true;
                 
-
             }
 
             Destroy(gameObject);
@@ -109,7 +112,7 @@ public class Thunderball : MonoBehaviour
 
         lr.SetPositions(arr);
 
-        
+        g.GetComponent<ThundertrailScript>().cd = true;
 
         edge.gameObject.layer = 0;
     }

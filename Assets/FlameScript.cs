@@ -18,17 +18,6 @@ public class FlameScript : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Player")
-        {
-            GameObject.FindFirstObjectByType<CanvasScript>().TallyScore((int)collision.transform.GetComponent<Inputs>().zoop);
-            Destroy(collision.gameObject);
-        }
     }
 
 }

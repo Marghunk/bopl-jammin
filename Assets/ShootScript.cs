@@ -13,12 +13,16 @@ public class ShootScript : MonoBehaviour
 
     [Header("Coen's shit")]
     public GameObject triangle;
+    public float tempSpeed = 0, tempFallSpeed = 0;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         gravity = GetComponent<SplineGravity>();
         inputs = GetComponent<Inputs>();
+
+        tempSpeed = GetComponent<SplineMovement>().movementSpeed;
+        tempFallSpeed = GetComponent<AirMovement>().speed;
     }
 
 
@@ -34,28 +38,35 @@ public class ShootScript : MonoBehaviour
         inputDirection.Normalize();
 
 
+
+
         #region coen's shit
         
-        
+       
         
         if (Input.GetButton($"Shoot-GP-{gamepadIndex}"))
         {
-            Debug.Log("Fire!");
+            //Debug.Log("Fire!");
             // Draw the input direction.
             //if (toggleDebug) Debug.DrawRay(transform.position, inputDirection * inputMagnitude, debugInputColor);
             triangle.transform.position = transform.position + ((Vector3)inputDirection * 0.5f);
 
+            
         }
 
         if (Input.GetButtonDown($"Shoot-GP-{gamepadIndex}"))
         {
             Debug.Log("A");
             StartCoroutine(SlowGravity());
+            GetComponent<SplineMovement>().movementSpeed = 0;
+            GetComponent<AirMovement>().speed = 0;
         }
 
         if (Input.GetButtonUp($"Shoot-GP-{gamepadIndex}"))
         {
             GetComponent<PlayerSpellInfo>().CastSpell((transform.GetChild(0).position - transform.position).normalized);
+            GetComponent<SplineMovement>().movementSpeed = tempSpeed;
+            GetComponent<AirMovement>().speed = 1000;
         }
 
         #endregion

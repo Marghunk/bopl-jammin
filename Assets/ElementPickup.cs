@@ -68,7 +68,7 @@ public class ElementPickup : MonoBehaviour
             else
             if (collision.transform.GetComponent<PlayerSpellInfo>().heldElements.Count < 2)
             {
-                if (collision.transform.GetComponent<PlayerSpellInfo>().heldElements.Count < 2)
+                if (collision.transform.GetComponent<PlayerSpellInfo>().heldElements.Count == 0 || collision.transform.GetComponent<PlayerSpellInfo>().heldElements[0].elementName == element)
                 {
                     collision.transform.GetComponent<PlayerSpellInfo>().heldElements.Add(new Element(element, c));
                     Destroy(gameObject);

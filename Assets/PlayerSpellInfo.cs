@@ -17,22 +17,36 @@ public class PlayerSpellInfo : MonoBehaviour
     [SerializeField ]
     bool chaos = false;
 
+    public GameObject chaosLight;
+
+    bool wet = false;
+
     public bool SetChaos
     {
         get { return chaos; }
         set { chaos = value;
-            StartCoroutine(ChaosTime(3f));
+            if (value) {chaosLight.SetActive(true); StartCoroutine(ChaosTime(10f));}
+            else { chaosLight.SetActive(false); };
         }
     }
 
     IEnumerator ChaosTime(float f)
     {
+        GameObject.FindObjectOfType<ChaosController>().StartTheDisco(true);
         while (f > 0)
         {
             f -= Time.deltaTime;
             yield return null;
         }
-        chaos = false;
+        SetChaos = false;
+        foreach (var item in GameObject.FindObjectsOfType<PlayerSpellInfo>())
+        {
+            if (item.SetChaos == true)
+            {
+                yield break;
+            }
+        }
+        GameObject.FindObjectOfType<ChaosController>().StartTheDisco(false);
         yield return null;
     }
 
@@ -92,7 +106,10 @@ public class PlayerSpellInfo : MonoBehaviour
                 default:
                     break;
             }
-            heldElements.RemoveAt(0);
+            if (!chaos)
+            {
+                heldElements.RemoveAt(0);
+            }            
         }
         else if (heldElements.Count == 2)
         {
@@ -156,15 +173,21 @@ public class PlayerSpellInfo : MonoBehaviour
                 default:
                     break;
             }
-            heldElements.RemoveAt(1);
-            heldElements.RemoveAt(0);
+
+            if (!chaos)
+            {
+                heldElements.RemoveAt(1);
+                heldElements.RemoveAt(0);
+            }
         }
     }
+
+    // old thing : (transform.position+(Vector3)up * 0.3f) + ((Vector3)dir * 0.7f)
 
     private void Thunderbolt(Vector2 dir, int level = 1)
     {
         Vector2 up = -GetComponent<ShootScript>().gravity.DirectionToNearestGround();
-        GameObject g = Instantiate(Resources.Load("Thunderball") as GameObject, (transform.position + (Vector3)up * 0.3f) + ((Vector3)dir * 0.7f), Quaternion.identity);
+        GameObject g = Instantiate(Resources.Load("Thunderball") as GameObject, (transform.position + (Vector3)dir * 0.7f), Quaternion.identity);
         g.GetComponent<Thunderball>().evo = level;
         g.GetComponent<Rigidbody2D>().velocity = dir * 7.5f;
     }
@@ -172,7 +195,7 @@ public class PlayerSpellInfo : MonoBehaviour
     private void Waterball(Vector2 dir, int level = 1)
     {
         Vector2 up = -GetComponent<ShootScript>().gravity.DirectionToNearestGround();
-        GameObject g = Instantiate(Resources.Load("Waterball") as GameObject, (transform.position + (Vector3)up * 0.3f) + ((Vector3)dir * 0.7f), Quaternion.identity);
+        GameObject g = Instantiate(Resources.Load("Waterball") as GameObject, (transform.position + (Vector3)dir * 0.7f), Quaternion.identity);
         g.GetComponent<Waterball>().evo = level;
         g.GetComponent<Rigidbody2D>().velocity = dir * 7.5f;
 
@@ -181,7 +204,7 @@ public class PlayerSpellInfo : MonoBehaviour
     private void Fireball(Vector2 dir, int level = 1)
     {
         Vector2 up = -GetComponent<ShootScript>().gravity.DirectionToNearestGround(); 
-        GameObject g = Instantiate(Resources.Load("Fireball") as GameObject, (transform.position+(Vector3)up * 0.3f) + ((Vector3)dir * 0.7f), Quaternion.identity);
+        GameObject g = Instantiate(Resources.Load("Fireball") as GameObject, (transform.position + (Vector3)dir * 0.7f), Quaternion.identity);
         g.GetComponent<FireballScript>().evo = level;
         g.GetComponent<Rigidbody2D>().velocity = dir * 7.5f;
     }
@@ -191,6 +214,63 @@ public class PlayerSpellInfo : MonoBehaviour
         if (collision.tag == "Electric")
         {
             Debug.Log(collision.name);
+            //Debug.Log();
+            canvasS.TallyScore(transform.GetComponent<Inputs>().zoop);
+            Debug.Log("ZAP!");
+            Destroy(gameObject);
+        }
+        if (collision.tag == "DeathZone")
+        {
+            canvasS.TallyScore(transform.GetComponent<Inputs>().zoop);
+            Debug.Log("Fell off + ratio!");
+            Destroy(gameObject);
+        }
+
+
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Fire")
+        {
+            if (!wet)
+            {
+                canvasS.TallyScore(transform.GetComponent<Inputs>().zoop);
+                Debug.Log("SCORCH!");
+                Destroy(gameObject);
+            }
+            
+        }
+
+
+        if (collision.tag == "Water")
+        {
+            wet = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Water")
+        {
+            wet = false;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.tag == "Fire")
+        {
+            if (!wet)
+            {
+                canvasS.TallyScore(transform.GetComponent<Inputs>().zoop);
+                Debug.Log("SCORCH!");
+                Destroy(gameObject);
+            }
+            
+        }
+        if (collision.transform.tag == "Electric")
+        {
+            //Debug.Log(collision.transform.name);
             //Debug.Log();
             canvasS.TallyScore(transform.GetComponent<Inputs>().zoop);
             Debug.Log("ZAP!");

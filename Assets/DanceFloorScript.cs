@@ -9,7 +9,7 @@ public class DanceFloorScript : MonoBehaviour
     public bool partyStarted = false;
 
     public float cooldown = 3;
-    float f;
+    public float f;
 
     private void Awake()
     {
@@ -24,7 +24,23 @@ public class DanceFloorScript : MonoBehaviour
         }
         else
         {
-            GetComponent<Renderer>().material.SetColor("_EmissionColor", discoColors[Random.Range(0, discoColors.Length)] * 0.3f); ;
+            if (partyStarted)
+            {
+                switch (Random.Range(0,2))
+                {
+                    case 0:
+                        GetComponent<Renderer>().material.SetColor("_EmissionColor", discoColors[Random.Range(0, discoColors.Length)] * 1f);
+                        break;
+                    case 1:
+                        GetComponent<Renderer>().material.SetColor("_EmissionColor", discoColors[Random.Range(0, discoColors.Length)] * 0.3f);
+                        break;
+                }                
+            }
+            else
+            {
+                GetComponent<Renderer>().material.SetColor("_EmissionColor", discoColors[Random.Range(0, discoColors.Length)] * 0.3f);
+            }
+            
             f = cooldown;
         }
     }

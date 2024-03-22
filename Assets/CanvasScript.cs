@@ -16,20 +16,20 @@ public class CanvasScript : MonoBehaviour
 
     public void TallyScore(int gamepadIndex, bool KillorDie = false)
     {
-        int i = 0;
-        if (!KillorDie)
+        int j;
+        for (int i = 0; i < characters.Count; i++)
         {
-            for (int j = 0; j < characters.Count; j++)
+            if (characters[i].id == gamepadIndex)
             {
-                if (characters[i].id == gamepadIndex)
-                {
-                    i = j;
-                    characters[j].deaths++;
-                    break;
-                }
+                characters[i].deaths++;
+
+                avatarz[i].GetComponentInChildren<TMP_Text>().text = $"{characters[i].deaths} deaths";
             }
         }
-        avatarz[i].transform.GetChild(1).GetComponent<TMP_Text>().text = $"{characters[i].deaths}<br>";
+        
+
+        
+        Debug.Log(gamepadIndex);
     }
 
     public void CreateCharAvatar(int playerId, GameObject player)
@@ -43,7 +43,7 @@ public class CanvasScript : MonoBehaviour
             }
         }
         GameObject g = (Instantiate(avatarUI, transform));
-        g.transform.GetComponent<RectTransform>().localPosition += (Vector3.up * 150) * avatarz.Count;
+        g.transform.GetComponent<RectTransform>().localPosition += (Vector3.up * 70) * avatarz.Count;
         characters.Add(new CharData(player.GetComponent<Renderer>().material.color, playerId));
         avatarz.Add(g);
 
