@@ -9,6 +9,8 @@ public class ElementSpawner : MonoBehaviour
 
     public Transform[] specialSpawns;
 
+    public List<Element.elementEnum> weightedSpawn = new List<Element.elementEnum>();
+
     bool kink = false;
     private void Start()
     {
@@ -36,7 +38,9 @@ public class ElementSpawner : MonoBehaviour
                 if (eleSpawns[i].childCount == 0)
                 {
                     GameObject g = Instantiate(Resources.Load("Element") as GameObject, eleSpawns[i]);
-                    g.GetComponent<ElementPickup>().element = (Element.elementEnum)Random.Range(1,4);
+                    int rand = Random.Range(0, weightedSpawn.Count);
+                    g.GetComponent<ElementPickup>().element = weightedSpawn[rand]; //(Element.elementEnum)Random.Range(1,4);
+                    weightedSpawn.RemoveAt(rand);
 
                 }
                

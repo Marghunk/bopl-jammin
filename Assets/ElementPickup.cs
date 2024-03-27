@@ -71,6 +71,7 @@ public class ElementPickup : MonoBehaviour
                 if (collision.transform.GetComponent<PlayerSpellInfo>().heldElements.Count == 0 || collision.transform.GetComponent<PlayerSpellInfo>().heldElements[0].elementName == element)
                 {
                     collision.transform.GetComponent<PlayerSpellInfo>().heldElements.Add(new Element(element, c));
+                    GameObject.FindObjectOfType<ElementSpawner>().weightedSpawn.Add(element);
                     Destroy(gameObject);
                 }
             }
